@@ -19,11 +19,12 @@
             align-items: center;
             font-family: 'Microsoft YaHei', sans-serif;
             overflow: hidden;
+            font-size: 1.1em; /* 增加基础字体大小 */
         }
         
         #welcome-text {
             color: white;
-            font-size: 2.5rem;
+            font-size: 2.8rem; /* 变大 */
             opacity: 0;
             animation: fadeIn 5s ease-in forwards;
             margin-bottom: 2rem;
@@ -39,8 +40,8 @@
             background: rgba(255, 255, 255, 0.2);
             border: 2px solid rgba(255, 255, 255, 0.3);
             color: white;
-            padding: 1rem 2.5rem;
-            font-size: 1.2rem;
+            padding: 1.1rem 2.6rem; /* 变大 */
+            font-size: 1.3rem; /* 变大 */
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -54,19 +55,24 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
         
+        /* 按钮点击动画 */
+        #reveal-btn.animate {
+            animation: buttonExpandFade 0.8s ease forwards;
+        }
+        
         #answer {
             color: white;
-            font-size: 3rem;
+            font-size: 3.2rem; /* 变大 */
             font-weight: bold;
             text-shadow: 0 5px 15px rgba(0,0,0,0.3);
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(20px) scale(0.9);
             transition: all 0.8s ease;
         }
         
         #answer.show {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
         
         @keyframes fadeIn {
@@ -75,13 +81,24 @@
             80% { opacity: 1; }
             100% { opacity: 0; }
         }
+        
+        @keyframes buttonExpandFade {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
     <div id="welcome-text">欢迎</div>
     
     <div id="content">
-        <button id="reveal-btn">布谷鹏是谁？</button>
+        <button id="reveal-btn">布谷鹏是谁</button>
         <div id="answer">傻福</div>
     </div>
 
@@ -93,8 +110,14 @@
             }, 5000);
             
             document.getElementById('reveal-btn').addEventListener('click', function() {
-                this.style.display = 'none';
-                document.getElementById('answer').classList.add('show');
+                // 添加按钮动画类
+                this.classList.add('animate');
+                
+                // 动画结束后隐藏按钮并显示答案
+                setTimeout(() => {
+                    this.style.display = 'none';
+                    document.getElementById('answer').classList.add('show');
+                }, 800);
             });
         });
     </script>
