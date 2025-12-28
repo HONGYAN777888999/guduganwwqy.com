@@ -1,2 +1,231 @@
-<h1>666杉杉</h1>
-  <p>还是个可怕</p>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>整蛊选择器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            color: #222;
+            letter-spacing: 2px;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .option-btn {
+            padding: 1.5rem;
+            font-size: 1.8rem;
+            background-color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        
+        .option-btn:hover {
+            border-color: #aaa;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .option-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .result-container {
+            display: none;
+            padding: 3rem 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .result-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            color: #333;
+        }
+        
+        .result-content {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #result1, #result2 {
+            color: #e74c3c;
+            font-weight: 500;
+        }
+        
+        #result3 {
+            color: #c0392b;
+            font-weight: 600;
+        }
+        
+        .back-btn {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #555;
+        }
+        
+        .back-btn:hover {
+            background-color: #f0f0f0;
+            border-color: #aaa;
+        }
+        
+        .footer {
+            margin-top: 2rem;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .option-btn { font-size: 1.5rem; padding: 1.2rem; }
+            .result-content { font-size: 2.2rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 1.8rem; margin-bottom: 2rem; }
+            .option-btn { font-size: 1.3rem; padding: 1rem; }
+            .result-content { font-size: 1.8rem; padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>整蛊选择器</h1>
+        
+        <div class="options-container" id="options">
+            <button class="option-btn" data-option="1">整妹</button>
+            <button class="option-btn" data-option="2">整哥</button>
+            <button class="option-btn" data-option="3">不整</button>
+        </div>
+        
+        <div class="result-container" id="result-container">
+            <h2 class="result-title">结果</h2>
+            <div class="result-content" id="result-content">
+                <!-- 结果内容将通过JavaScript动态填充 -->
+            </div>
+            <button class="back-btn" id="back-btn">返回选择</button>
+        </div>
+        
+        <div class="footer">
+            <p>简约设计 · 仅供娱乐</p>
+        </div>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const optionsContainer = document.getElementById('options');
+        const resultContainer = document.getElementById('result-container');
+        const resultContent = document.getElementById('result-content');
+        const backBtn = document.getElementById('back-btn');
+        const optionButtons = document.querySelectorAll('.option-btn');
+        
+        // 定义结果内容
+        const results = {
+            1: "被整人已逃跑！",
+            2: "被整人已逃跑！", 
+            3: "你敢不整？"
+        };
+        
+        // 为每个选项按钮添加点击事件
+        optionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const option = this.getAttribute('data-option');
+                
+                // 隐藏选项，显示结果
+                optionsContainer.style.display = 'none';
+                resultContainer.style.display = 'block';
+                
+                // 设置结果内容
+                resultContent.textContent = results[option];
+                
+                // 根据选项设置不同的结果ID
+                resultContent.id = `result${option}`;
+                
+                // 添加一点动画效果
+                resultContent.style.opacity = '0';
+                setTimeout(() => {
+                    resultContent.style.transition = 'opacity 0.5s ease';
+                    resultContent.style.opacity = '1';
+                }, 50);
+            });
+        });
+        
+        // 返回按钮点击事件
+        backBtn.addEventListener('click', function() {
+            // 隐藏结果，显示选项
+            resultContainer.style.display = 'none';
+            optionsContainer.style.display = 'flex';
+            
+            // 添加一点动画效果
+            optionsContainer.style.opacity = '0';
+            setTimeout(() => {
+                optionsContainer.style.transition = 'opacity 0.5s ease';
+                optionsContainer.style.opacity = '1';
+            }, 50);
+        });
+        
+        // 初始加载时，确保选项容器是可见的
+        window.addEventListener('load', function() {
+            optionsContainer.style.display = 'flex';
+            resultContainer.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
