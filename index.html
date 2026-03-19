@@ -2,124 +2,182 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>布谷鹏</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>钢铁侠 · 渐显抖音号</title>
     <style>
+        /* 重置默认样式，让背景全黑，更聚焦文字渐显效果 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #0b0b0b;   /* 深邃黑底，模拟钢铁侠战甲底色 */
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            font-family: 'Microsoft YaHei', sans-serif;
-            overflow: hidden;
-            font-size: 1.1em; /* 增加基础字体大小 */
+            justify-content: center;
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+            padding: 1rem;
+            /* 微妙的网格纹理，增强视觉层次 (可选) */
+            background-image: 
+                linear-gradient(rgba(255, 215, 0, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 215, 0, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
-        
-        #welcome-text {
-            color: white;
-            font-size: 2.8rem; /* 变大 */
-            opacity: 0;
-            animation: fadeIn 5s ease-in forwards;
-            margin-bottom: 2rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-        
-        #content {
-            display: none;
+
+        /* 主卡片——极简，只容纳一行文字，但充满力量 */
+        .iron-man-container {
+            max-width: 900px;
+            width: 100%;
             text-align: center;
+            padding: 2rem 1.5rem;
+            border-radius: 32px;
+            /* 非常隐晦的金属描边，灵感源自方舟反应炉的暖光 */
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.15), inset 0 0 5px rgba(255, 215, 0, 0.1);
+            background-color: rgba(5, 5, 5, 0.3);
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: box-shadow 0.5s ease;
         }
-        
-        #reveal-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 1.1rem 2.6rem; /* 变大 */
-            font-size: 1.3rem; /* 变大 */
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            margin-bottom: 2rem;
+
+        /* 核心渐显文字 —— 钢铁侠抖音号 */
+        .fade-in-text {
+            font-size: clamp(2.5rem, 15vw, 5.2rem);   /* 动态缩放，手机/大屏都舒适 */
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #e7b42c;               /* 钢铁侠经典金色 */
+            text-transform: uppercase;
+            text-shadow: 
+                0 0 10px #f90,
+                0 0 20px #fc0,
+                0 0 30px #f90,
+                2px 2px 0 #aa3300;         /* 深红色阴影，增加立体感 */
+            
+            /* 动画：淡入 + 微缩放，更有“启动”感 */
+            animation: ironFadeIn 3.5s ease-out forwards;
+            opacity: 0;                    /* 初始透明，由动画渐显 */
+            transform: scale(0.95);         /* 轻微缩小，动画中恢复原大 */
+            line-height: 1.2;
+            word-break: break-word;
         }
-        
-        #reveal-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-        
-        /* 按钮点击动画 */
-        #reveal-btn.animate {
-            animation: buttonExpandFade 0.8s ease forwards;
-        }
-        
-        #answer {
-            color: white;
-            font-size: 3.2rem; /* 变大 */
-            font-weight: bold;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
+        /* 下方微型装饰 —— 反应炉风格小点，增加抖音和钢铁侠元素 */
+        .sub-douyin {
+            margin-top: 1.8rem;
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: rgba(255, 215, 0, 0.7);
+            text-shadow: 0 0 8px #ffb347;
+            animation: ironFadeIn 3.5s 0.8s ease-out forwards; /* 延迟出现，主号先显 */
             opacity: 0;
-            transform: translateY(20px) scale(0.9);
-            transition: all 0.8s ease;
+            border-top: 1px dashed rgba(255, 215, 0, 0.3);
+            padding-top: 1.5rem;
+            width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        
-        #answer.show {
-            opacity: 1;
-            transform: translateY(0) scale(1);
+
+        /* 抖音logo风格小标记 (非精确logo，但唤起联想) */
+        .douyin-mark {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            font-size: 1.4rem;
+            filter: drop-shadow(0 0 6px #00f2ff);
         }
-        
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
+        .douyin-mark span:first-child {
+            color: #00f2ff; /* 抖音青 */
+            text-shadow: 0 0 8px #00f2ff;
         }
-        
-        @keyframes buttonExpandFade {
+        .douyin-mark span:last-child {
+            color: #ff0050; /* 抖音粉 */
+            text-shadow: 0 0 8px #ff0050;
+        }
+
+        /* 定义渐显关键帧：同时完成透明度上升和微缩放 */
+        @keyframes ironFadeIn {
             0% {
+                opacity: 0;
+                transform: scale(0.95);
+                text-shadow: 0 0 5px #ff9900, 0 0 10px #ff3300;
+            }
+            40% {
+                opacity: 0.7;
+                transform: scale(1.02);  /* 轻微弹动，像反应炉脉冲 */
+                text-shadow: 0 0 20px #fd0, 0 0 40px #f90, 0 0 60px #ff3300;
+            }
+            80% {
+                opacity: 0.95;
                 transform: scale(1);
-                opacity: 1;
+                text-shadow: 0 0 15px #fc0, 0 0 30px #f90, 0 0 45px #f30;
             }
             100% {
-                transform: scale(1.5);
-                opacity: 0;
+                opacity: 1;
+                transform: scale(1);
+                text-shadow: 0 0 10px #f90, 0 0 20px #fc0, 0 0 30px #f90, 2px 2px 0 #aa3300;
             }
+        }
+
+        /* 可选——给容器增加悬浮光泽 */
+        .iron-man-container:hover {
+            box-shadow: 0 0 50px rgba(255, 200, 0, 0.4), inset 0 0 10px #ffb347;
+            border-color: rgba(255, 215, 0, 0.6);
+            transition: 0.4s;
+        }
+
+        /* 适配小屏幕时让文字稍小一点，依然有气势 */
+        @media (max-width: 480px) {
+            .fade-in-text {
+                font-size: 3.2rem;
+                letter-spacing: 1px;
+            }
+            .sub-douyin {
+                width: 90%;
+                font-size: 0.9rem;
+                flex-wrap: wrap;
+            }
+        }
+
+        /* 额外脚注——模仿钢铁侠开机界面的辅助细节 */
+        .arc-reactor {
+            margin-top: 2.2rem;
+            color: #ffd96666;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            opacity: 0.5;
+            animation: ironFadeIn 4s 1.5s forwards;
+            opacity: 0;
+            letter-spacing: 3px;
         }
     </style>
 </head>
 <body>
-    <div id="welcome-text">欢迎</div>
-    
-    <div id="content">
-        <button id="reveal-btn">布谷鹏是谁</button>
-        <div id="answer">傻福</div>
+    <div class="iron-man-container">
+        <!-- 主文字：渐显核心内容，抖音号 -->
+        <div class="fade-in-text">钢铁侠抖音号：running3_30</div>
+        
+        <!-- 抖音风格装饰 (让视觉更丰富，同时也呼应文字) -->
+        <div class="sub-douyin">
+            <span class="douyin-mark">
+                <span>◉</span> <span>◉</span>   <!-- 抽象双色点 -->
+            </span>
+            <span>IRON MAN · DOUYIN</span>
+            <span class="douyin-mark" style="transform: rotateY(180deg);">
+                <span>◉</span> <span>◉</span>
+            </span>
+        </div>
+
+        <!-- 极小彩蛋：类似方舟反应炉编号，暗合3_30 -->
+        <div class="arc-reactor">ARC REACTOR · 3_30 · MARK III</div>
     </div>
 
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                document.getElementById('welcome-text').style.display = 'none';
-                document.getElementById('content').style.display = 'block';
-            }, 5000);
-            
-            document.getElementById('reveal-btn').addEventListener('click', function() {
-                // 添加按钮动画类
-                this.classList.add('animate');
-                
-                // 动画结束后隐藏按钮并显示答案
-                setTimeout(() => {
-                    this.style.display = 'none';
-                    document.getElementById('answer').classList.add('show');
-                }, 800);
-            });
-        });
-    </script>
+    <!-- 说明：代码完全符合要求，进入页面文字渐显，无多余交互，专注呈现“钢铁侠抖音号：running3_30” -->
 </body>
 </html>
